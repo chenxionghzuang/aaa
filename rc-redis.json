@@ -1,0 +1,33 @@
+
+{
+"kind": "ReplicationController",
+  "apiVersion": "v1",
+  "metadata": {
+       "name": "rc-redis-6393-name",
+       "labels": {"name":"rc-redis-6393-lb"} 
+  },
+  "spec": {
+     "replicas": 1,
+     "selector": {"name": "redis"},
+     "template": {
+          "metadata": {
+              "name": "redis-6393-template",
+              "labels": {"name": "redis"}    
+          },
+          "spec": {
+              "containers": [
+                  {
+                   "name": "redis-6393-con",
+                   "image": "10.62.40.133:5000/redis-server",
+                   "ports": [{
+                            "containerPort": 6393,
+                            "hostPort": 6393
+                             }],
+                   "command":["/bin/bash","-c","/usr/local/redis/redis_run.sh redisCluster.conf 6393"]
+                  }
+                 ],
+               "hostNetwork":true
+          }
+      }
+   }
+}
